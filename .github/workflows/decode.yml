@@ -3,6 +3,8 @@ jobs:
   b64:
     name: b64 decode
     runs-on: ubuntu-latest
+    outputs:
+      value: ${{ steps.decode.value }}
     steps:
     - name: decode
       id: decode
@@ -11,9 +13,12 @@ jobs:
       run: |
         VAR="$(echo "$VAR" | base64 --decode)"
         echo "::set-output name=value::$VAR"
-    - name: echo
-      env:
-        VALUE: ${{ decode.outputs.value }}
-      run: |
-        echo "$VALUE"
-      
+  echo:
+    name: echo results
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        env:
+          VAR: ${{ b64.outputs.value }}
+        run: |
+          echo "$VAR"

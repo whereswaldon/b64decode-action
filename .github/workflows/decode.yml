@@ -1,4 +1,4 @@
-on: [push]
+on: push
 jobs:
   b64:
     name: b64 decode

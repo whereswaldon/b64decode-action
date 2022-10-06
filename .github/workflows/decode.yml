@@ -1,1 +1,19 @@
-
+on: [push]
+jobs:
+  b64:
+    name: b64 decode
+    runs-on: ubuntu-latest
+    steps:
+    - name: decode
+      id: decode
+      env:
+        VAR: "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdCwgc2VkIGRvIGVpdXNtb2QgdGVtcG9yIGluY2lkaWR1bnQgdXQgbGFib3JlIGV0IGRvbG9yZSBtYWduYSBhbGlxdWEuIEF0IGltcGVyZGlldCBkdWkgYWNjdW1zYW4gc2l0LiBBbWV0IGx1Y3R1cyB2ZW5lbmF0aXMgbGVjdHVzIG1hZ25hIGZyaW5naWxsYS4gU2VkIHNlZCByaXN1cyBwcmV0aXVtIHF1YW0gdnVscHV0YXRlIGRpZ25pc3NpbS4gRXJhdCBpbXBlcmRpZXQgc2VkIGV1aXNtb2QgbmlzaSBwb3J0YSBsb3JlbSBtb2xsaXMgYWxpcXVhbSB1dC4gRWdlc3RhcyBkdWkgaWQgb3JuYXJlIGFyY3UuIE1pIGluIG51bGxhIHBvc3VlcmUgc29sbGljaXR1ZGluLiBQcmV0aXVtIHZpdmVycmEgc3VzcGVuZGlzc2UgcG90ZW50aSBudWxsYW0gYWMgdG9ydG9yIHZpdGFlIHB1cnVzLiBMYWN1cyB2aXZlcnJhIHZpdGFlIGNvbmd1ZSBldS4gVHVycGlzIGVnZXN0YXMgbWFlY2VuYXMgcGhhcmV0cmEgY29udmFsbGlzIHBvc3VlcmUuIEVnZXN0YXMgZWdlc3RhcyBmcmluZ2lsbGEgcGhhc2VsbHVzIGZhdWNpYnVzIHNjZWxlcmlzcXVlIGVsZWlmZW5kIGRvbmVjIHByZXRpdW0gdnVscHV0YXRlLiBNYXNzYSBlZ2V0IGVnZXN0YXMgcHVydXMgdml2ZXJyYSBhY2N1bXNhbiBpbiBuaXNsIG5pc2kgc2NlbGVyaXNxdWUuIFZlc3RpYnVsdW0gcmhvbmN1cyBlc3QgcGVsbGVudGVzcXVlIGVsaXQgdWxsYW1jb3JwZXIuIFRlbGx1cyBpbnRlZ2VyIGZldWdpYXQgc2NlbGVyaXNxdWUgdmFyaXVzIG1vcmJpIGVuaW0gbnVuYyBmYXVjaWJ1cyBhLiBWdWxwdXRhdGUgdXQgcGhhcmV0cmEgc2l0IGFtZXQgYWxpcXVhbSBpZC4gUGxhY2VyYXQgaW4gZWdlc3RhcyBlcmF0IGltcGVyZGlldCBzZWQgZXVpc21vZCBuaXNpIHBvcnRhLiBFZ2VzdGFzIHF1aXMgaXBzdW0gc3VzcGVuZGlzc2UgdWx0cmljZXMuIE1hbGVzdWFkYSBmYW1lcyBhYyB0dXJwaXMgZWdlc3RhcyBtYWVjZW5hcyBwaGFyZXRyYSBjb252YWxsaXMgcG9zdWVyZSBtb3JiaS4gUXVpcyBjb21tb2RvIG9kaW8gYWVuZWFuIHNlZCBhZGlwaXNjaW5nIGRpYW0gZG9uZWMuIEZhbWVzIGFjIHR1cnBpcyBlZ2VzdGFzIG1hZWNlbmFzIHBoYXJldHJhIGNvbnZhbGxpcyBwb3N1ZXJlIG1vcmJpLgo="
+      run: |
+        VAR="$(echo "$VAR" | base64 --decode)"
+        echo "::set-output name=value::$VAR"
+    - name: echo
+      env:
+        VALUE: ${{ decode.outputs.value }}
+      run: |
+        echo "$VALUE"
+      

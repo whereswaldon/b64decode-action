@@ -20,6 +20,6 @@ jobs:
     steps:
       - name: echo
         env:
-          VAR: ${{ b64.outputs.value }}
+          VAR: ${{ needs.b64.outputs.value }}
         run: |
           echo "$VAR"
